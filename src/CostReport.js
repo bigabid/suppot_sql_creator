@@ -315,6 +315,14 @@ export default function CostReport() {
     const [apiKey, setApikey] = useState(makeid(20));
     const [reportId, setReportId] = useState("");
     const [os, setOs] = useState("");
+    const [query, setQuery] = useState("");
+
+    useEffect(() => {
+        const insertQuery = `            UPDATE testdb.applications t
+            SET t.cpm_report = 1
+            WHERE t.id = ${applicationId};`;
+        setQuery(insertQuery);
+    }, [applicationId]);
 
     return (
         <>
@@ -357,6 +365,16 @@ export default function CostReport() {
             <br/>
             <br/>
 
+            <h2>Adjust</h2>
+            <h3>fill the application below</h3>
+            <textarea value={query} readOnly rows={10} cols={100}
+            />
+            <br/>
+            <CopyToClipboard
+                text={query}>
+                <button>Copy to clipboard</button>
+            </CopyToClipboard>
+            <br/>
             <h1>This is the audience part!</h1>
             <h3>Fill this once for the new report:</h3>
             Application name*:
